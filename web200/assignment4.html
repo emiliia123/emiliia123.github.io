@@ -1,0 +1,63 @@
+<!--
+Name: Emiliia Seit-Liumanova
+Assignment 4
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assignment 4</title>
+</head>
+
+<body>
+
+    <h1>JavaScript Functions</h1>
+
+    <p>Enter two numbers:</p>
+
+    <input type="number" id="num1">
+    <input type="number" id="num2">
+
+    <br><br>
+
+    <button onclick="showResults()">Calculate</button>
+
+    <p id="addResult"></p>
+    <p id="multiplyResult"></p>
+    <p id="subtractResult"></p>
+
+    <script>
+
+        // Basic function definition
+        function addNumbers(a, b) {
+            return a + b;
+        }
+
+        // Function expression
+        const multiplyNumbers = function(a, b) {
+            return a * b;
+        };
+
+        // Arrow function
+        const subtractNumbers = (a, b) => {
+            return a - b;
+        };
+
+        function showResults() {
+            let number1 = Number(document.getElementById("num1").value);
+            let number2 = Number(document.getElementById("num2").value);
+
+            document.getElementById("addResult").innerHTML =
+                "Addition: " + addNumbers(number1, number2);
+
+            document.getElementById("multiplyResult").innerHTML =
+                "Multiplication: " + multiplyNumbers(number1, number2);
+
+            document.getElementById("subtractResult").innerHTML =
+                "Subtraction: " + subtractNumbers(number1, number2);
+        }
+
+    </script>
+
+</body>
+</html>
