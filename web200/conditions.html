@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Quiz</title>
+</head>
+<body>
+
+    <h1>JavaScript Quiz</h1>
+    <p>Answer all 4 questions, then click the button to see your score.</p>
+
+    <form id="quizForm">
+
+        <h2>1. Which keyword creates a variable that can be changed?</h2>
+        <label><input type="radio" name="q1" value="let"> let</label><br>
+        <label><input type="radio" name="q1" value="const"> const</label><br>
+        <label><input type="radio" name="q1" value="html"> html</label><br>
+
+        <h2>2. Which statement is used to make a decision?</h2>
+        <label><input type="radio" name="q2" value="if"> if</label><br>
+        <label><input type="radio" name="q2" value="print"> print</label><br>
+        <label><input type="radio" name="q2" value="style"> style</label><br>
+
+        <h2>3. Which event happens when a button is pressed?</h2>
+        <label><input type="radio" name="q3" value="click"> click</label><br>
+        <label><input type="radio" name="q3" value="load"> load</label><br>
+        <label><input type="radio" name="q3" value="mouseover"> mouseover</label><br>
+
+        <h2>4. Which statement can compare one value with many cases?</h2>
+        <label><input type="radio" name="q4" value="switch"> switch</label><br>
+        <label><input type="radio" name="q4" value="alert"> alert</label><br>
+        <label><input type="radio" name="q4" value="prompt"> prompt</label><br>
+
+        <br>
+
+        <button type="button" id="checkButton">Check Score</button>
+    </form>
+
+    <h2 id="result"></h2>
+    <p id="feedback"></p>
+
+    <script src="conditions.js"></script>
+
+</body>
+</html>
