@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>While Loop Assignment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 50%;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: lightblue;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Multiplication Table</h1>
+  <p>Multiplication table for number 5.</p>
+
+  <table>
+    <tr>
+      <th>Number</th>
+      <th>Result</th>
+    </tr>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <script>
+    let i = 1;
+    let output = "";
+
+    while (i <= 10) {
+
+      // Continue skips number 5 as an example.
+      if (i === 5) {
+        i++;
+        continue;
+      }
+
+      output += "<tr><td>5 x " + i +
+                "</td><td>" + (5 * i) +
+                "</td></tr>";
+
+      i++;
+    }
+
+    document.getElementById("tableBody").innerHTML = output;
+  </script>
+
+</body>
+</html>
