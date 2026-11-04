@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Objects - Cars</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: lightgray;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Car Information</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Color</th>
+        <th>Price</th>
+        <th>Age</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody id="carTable"></tbody>
+  </table>
+
+  <script>
+    // Constructor
+    function Car(brand, model, year, color, price) {
+      this.brand = brand;
+      this.model = model;
+      this.year = year;
+      this.color = color;
+      this.price = price;
+
+      // Method 1
+      this.getAge = function() {
+        return new Date().getFullYear() - this.year;
+      };
+
+      // Method 2
+      this.getDescription = function() {
+        return this.brand + " " + this.model;
+      };
+    }
+
+    // Create 3 car objects
+    let car1 = new Car("Toyota", "Camry", 2022, "White", 25000);
+    let car2 = new Car("BMW", "X5", 2023, "Black", 55000);
+    let car3 = new Car("Honda", "Civic", 2021, "Blue", 22000);
+
+    let cars = [car1, car2, car3];
+
+    // Display cars in the table
+    let table = document.getElementById("carTable");
+
+    cars.forEach(function(car) {
+      table.innerHTML += `
+        <tr>
+          <td>${car.brand}</td>
+          <td>${car.model}</td>
+          <td>${car.year}</td>
+          <td>${car.color}</td>
+          <td>$${car.price}</td>
+          <td>${car.getAge()} years</td>
+          <td>${car.getDescription()}</td>
+        </tr>
+      `;
+    });
+  </script>
+
+</body>
+</html>
