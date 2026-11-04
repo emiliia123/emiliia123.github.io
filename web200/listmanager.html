@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple List Manager</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+
+    button, input {
+      padding: 10px;
+      margin: 5px;
+    }
+
+    button {
+      cursor: pointer;
+      background-color: lightblue;
+      border: 1px solid gray;
+      border-radius: 5px;
+    }
+
+    li {
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Simple List Manager</h1>
+
+  <h2>My Fruit List</h2>
+
+  <ul id="fruitList"></ul>
+
+  <h3>Add a Fruit</h3>
+  <input type="text" id="newFruit" placeholder="Enter a fruit">
+  <button onclick="addFruit()">Add</button>
+
+  <h3>Manage List</h3>
+  <button onclick="removeFruit()">Remove Last Item</button>
+  <button onclick="sortFruits()">Sort List</button>
+
+  <h3>Search for a Fruit</h3>
+  <input type="text" id="searchFruit" placeholder="Search fruit">
+  <button onclick="searchFruit()">Search</button>
+
+  <p id="message"></p>
+
+  <script>
+    // Array with 5 items
+    let fruits = [
+      "Apple",
+      "Banana",
+      "Orange",
+      "Mango",
+      "Grape"
+    ];
+
+    // Display current array
+    function displayFruits() {
+      let list = document.getElementById("fruitList");
+      list.innerHTML = "";
+
+      fruits.forEach(function(fruit) {
+        list.innerHTML += "<li>" + fruit + "</li>";
+      });
+    }
+
+    // Add item using push()
+    function addFruit() {
+      let input = document.getElementById("newFruit");
+      let fruit = input.value.trim();
+
+      if (fruit !== "") {
+        fruits.push(fruit);
+        input.value = "";
+        document.getElementById("message").textContent =
+          fruit + " added!";
+        displayFruits();
+      } else {
+        document.getElementById("message").textContent =
+          "Please enter a fruit.";
+      }
+    }
+
+    // Remove last item using pop()
+    function removeFruit() {
+      if (fruits.length > 0) {
+        let removed = fruits.pop();
+        document.getElementById("message").textContent =
+          removed + " removed!";
+      } else {
+        document.getElementById("message").textContent =
+          "The list is empty.";
+      }
+
+      displayFruits();
+    }
+
+    // Sort array using sort()
+    function sortFruits() {
+      fruits.sort();
+      document.getElementById("message").textContent =
+        "List sorted!";
+      displayFruits();
+    }
+
+    // Search using find()
+    function searchFruit() {
+      let search = document.getElementById("searchFruit")
+        .value.trim().toLowerCase();
+
+      let result = fruits.find(function(fruit) {
+        return fruit.toLowerCase() === search;
+      });
+
+      if (result) {
+        document.getElementById("message").textContent =
+          "Found: " + result;
+      } else {
+        document.getElementById("message").textContent =
+          "Error: Fruit not found!";
+      }
+    }
+
+    // Show initial list
+    displayFruits();
+  </script>
+
+</body>
+</html>
