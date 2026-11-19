@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slice & Smile | Pizza Ordering</title>
+  <style>
+    :root {
+      --ink: #29211c;
+      --red: #bc3427;
+      --cream: #fff9f1;
+      --line: #e8ded1;
+      --muted: #71665f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.5;
+    }
+    header {
+      background: #27201c;
+      color: white;
+      padding: 22px 6%;
+    }
+    .header-inner {
+      max-width: 1140px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .logo { font-weight: 800; font-size: 1.5rem; }
+    .tag { color: #eacaa2; font-size: .9rem; }
+    .hero {
+      background: linear-gradient(110deg, #f5d9ae, #fff1d9);
+      padding: 55px 6% 45px;
+    }
+    .hero-inner {
+      max-width: 1140px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      align-items: center;
+      gap: 20px;
+    }
+    .eyebrow {
+      color: #8d3f23;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: .78rem;
+      letter-spacing: 2px;
+    }
+    h1 {
+      font-size: clamp(2.3rem, 5vw, 4rem);
+      line-height: 1.05;
+      margin: 10px 0 15px;
+    }
+    .hero p { max-width: 530px; color: #5d4b3e; }
+    .pizza-art { font-size: 8rem; text-align: center; }
+    main {
+      max-width: 1140px;
+      margin: 35px auto 65px;
+      padding: 0 20px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
+      gap: 25px;
+      align-items: start;
+    }
+    .panel {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 27px;
+      box-shadow: 0 7px 22px #35261a0a;
+    }
+    .panel + .panel { margin-top: 22px; }
+    h2 { margin: 0 0 8px; font-size: 1.42rem; }
+    .help {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: .94rem;
+    }
+    fieldset {
+      border: 0;
+      padding: 0;
+      margin: 0 0 24px;
+    }
+    legend {
+      font-weight: 800;
+      margin-bottom: 12px;
+      font-size: 1.08rem;
+    }
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 11px;
+      background: #fffcf8;
+      border: 1.5px solid #eadfd2;
+      border-radius: 10px;
+      cursor: pointer;
+      min-height: 55px;
+    }
+    .choice:has(input:checked) {
+      border-color: var(--red);
+      background: #fff1e8;
+    }
+    input[type="checkbox"], input[type="radio"] {
+      accent-color: var(--red);
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+    .choice span { font-size: .93rem; }
+    .choice strong { display: block; }
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+    }
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block;
+      font-weight: 700;
+      font-size: .9rem;
+      margin-bottom: 6px;
+    }
+    .field input, .field textarea, .field select {
+      width: 100%;
+      border: 1.5px solid #d9d0c7;
+      border-radius: 9px;
+      background: white;
+      padding: 12px;
+      color: var(--ink);
+      font: inherit;
+    }
+    .field input:focus, .field textarea:focus {
+      outline: 3px solid #f8d7a0;
+      border-color: var(--red);
+    }
+    .field textarea {
+      resize: vertical;
+      min-height: 105px;
+    }
+    .summary { position: sticky; top: 20px; }
+    .summary h2 {
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--line);
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 13px 0;
+    }
+    .summary-row span:first-child { color: var(--muted); }
+    .items {
+      margin: 14px 0;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      font-size: .92rem;
+    }
+    .items p { margin: 8px 0; }
+    .total { font-weight: 900; font-size: 1.35rem; }
+    button {
+      width: 100%;
+      background: var(--red);
+      color: white;
+      font-size: 1rem;
+      font-weight: 800;
+      padding: 15px;
+      border-radius: 10px;
+      border: 0;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    button:hover { background: #992719; }
+    .small {
+      color: var(--muted);
+      font-size: .8rem;
+      margin-top: 12px;
+    }
+    #message {
+      margin: 18px 0 0;
+      font-weight: 700;
+      color: #25643f;
+    }
+    footer {
+      text-align: center;
+      padding: 24px;
+      background: #27201c;
+      color: #e9dacf;
+    }
+    @media (max-width: 780px) {
+      .layout { grid-template-columns: 1fr; }
+      .summary { position: static; }
+      .hero-inner { grid-template-columns: 1fr 100px; }
+      .pizza-art { font-size: 5rem; }
+    }
+    @media (max-width: 520px) {
+      .option-grid, .two-col { grid-template-columns: 1fr; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .pizza-art, .tag { display: none; }
+      .panel { padding: 19px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="logo">🍕 Slice & Smile</div>
+      <div class="tag">Fresh pizza, made your way.</div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">Build your perfect pizza</div>
+        <h1>Your pizza. Your rules.</h1>
+        <p>Choose your size, pick your favorite toppings, and see your total before placing your order.</p>
+      </div>
+      <div class="pizza-art" aria-hidden="true">🍕</div>
+    </div>
+  </section>
+
+  <main>
+    <form id="order-form" class="layout">
+      <div>
+        <section class="panel">
+          <h2>1. Make your pizza</h2>
+          <p class="help">Pick one crust size and as many toppings as you want.</p>
+
+          <fieldset>
+            <legend>Crust size</legend>
+            <div class="option-grid">
+              <label class="choice">
+                <input type="radio" name="size" value="Small" data-price="10">
+                <span><strong>Small</strong>10 in · $10</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="size" value="Medium" data-price="14" checked>
+                <span><strong>Medium</strong>12 in · $14</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="size" value="Large" data-price="18">
+                <span><strong>Large</strong>16 in · $18</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Toppings (+$1.50 each per pizza)</legend>
+            <div class="option-grid">
+              <label class="choice"><input type="checkbox" name="toppings" value="Extra cheese"><span>Extra cheese</span></label>
+              <label class="choice"><input type="checkbox" name="toppings" value="Mushrooms"><span>Mushrooms</span></label>
+              <label class="choice"><input type="checkbox" name="toppings" value="Bell peppers"><span>Bell peppers</span></label>
+              <label class="choice"><input type="checkbox" name="toppings" value="Onions"><span>Onions</span></label>
+              <label class="choice"><input type="checkbox" name="toppings" value="Black olives"><span>Black olives</span></label>
+              <label class="choice"><input type="checkbox" name="toppings" value="Pineapple"><span>Pineapple</span></label>
+              <label class="choice"><input type="checkbox" name="toppings" value="Spinach"><span>Spinach</span></label>
+              <label class="choice"><input type="checkbox" name="toppings" value="Tomatoes"><span>Tomatoes</span></label>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label for="quantity">Number of pizzas</label>
+            <select id="quantity" name="quantity">
+              <option value="1">1 pizza</option>
+              <option value="2">2 pizzas</option>
+              <option value="3">3 pizzas</option>
+              <option value="4">4 pizzas</option>
+              <option value="5">5 pizzas</option>
+              <option value="6">6 pizzas</option>
+              <option value="7">7 pizzas</option>
+              <option value="8">8 pizzas</option>
+              <option value="9">9 pizzas</option>
+              <option value="10">10 pizzas</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>2. Your information</h2>
+          <p class="help">Add your contact and delivery details.</p>
+
+          <div class="two-col">
+            <div class="field">
+              <label for="full-name">Full name *</label>
+              <input id="full-name" type="text" placeholder="Your full name" required>
+            </div>
+            <div class="field">
+              <label for="email">Email *</label>
+              <input id="email" type="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label for="phone">Phone number *</label>
+              <input id="phone" type="tel" placeholder="(555) 123-4567" required>
+            </div>
+            <div class="field">
+              <label for="address">Delivery address *</label>
+              <input id="address" type="text" placeholder="Street, city, ZIP" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="notes">Order notes (optional)</label>
+            <textarea id="notes" placeholder="Extra instructions for your order..."></textarea>
+          </div>
+        </section>
+      </div>
+
+      <aside class="panel summary">
+        <h2>3. Order details</h2>
+
+        <div class="summary-row">
+          <span>Pizza size</span>
+          <strong id="summary-size">Medium</strong>
+        </div>
+        <div class="summary-row">
+          <span>Quantity</span>
+          <strong id="summary-qty">1</strong>
+        </div>
+
+        <div class="items">
+          <strong>Selected toppings</strong>
+          <p id="summary-toppings">No extra toppings</p>
+        </div>
+
+        <div class="summary-row">
+          <span>Base price (each)</span>
+          <strong id="summary-base">$14.00</strong>
+        </div>
+        <div class="summary-row">
+          <span>Toppings (each)</span>
+          <strong id="summary-extras">$0.00</strong>
+        </div>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <strong id="summary-subtotal">$14.00</strong>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span id="summary-total">$14.00</span>
+        </div>
+
+        <button type="submit">Place Order</button>
+        <p class="small">Class project demo only. No payment is collected and no real order is sent.</p>
+        <p id="message" role="status" aria-live="polite"></p>
+      </aside>
+    </form>
+  </main>
+
+  <footer>
+    © 2026 Slice & Smile · Pizza Ordering Page · Student Project
+  </footer>
+
+  <script>
+    const form = document.getElementById("order-form");
+
+    function money(amount) {
+      return "$" + amount.toFixed(2);
+    }
+
+    function updateSummary() {
+      const selectedSize = form.querySelector('input[name="size"]:checked');
+      const toppings = [...form.querySelectorAll('input[name="toppings"]:checked')]
+        .map(box => box.value);
+
+      const quantity = Number(document.getElementById("quantity").value);
+      const base = Number(selectedSize.dataset.price);
+      const extra = toppings.length * 1.50;
+      const total = (base + extra) * quantity;
+
+      document.getElementById("summary-size").textContent = selectedSize.value;
+      document.getElementById("summary-qty").textContent = quantity;
+      document.getElementById("summary-toppings").textContent =
+        toppings.length ? toppings.join(", ") : "No extra toppings";
+      document.getElementById("summary-base").textContent = money(base);
+      document.getElementById("summary-extras").textContent = money(extra);
+      document.getElementById("summary-subtotal").textContent = money(total);
+      document.getElementById("summary-total").textContent = money(total);
+    }
+
+    form.addEventListener("change", updateSummary);
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      updateSummary();
+
+      const name = document.getElementById("full-name").value.trim();
+      const quantity = document.getElementById("quantity").value;
+
+      document.getElementById("message").textContent =
+        `Thanks, ${name}! Your demo order for ${quantity} pizza(s) has been created. No real order was submitted.`;
+    });
+
+    updateSummary();
+  </script>
+</body>
+</html>
